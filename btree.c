@@ -24,3 +24,11 @@ struct node *RotateL(struct node *v)
 	u->l = v;
 	return u;
 }
+
+void *Search(const struct node *root, const void *key,
+				int (*keycmp)(const void *, const void *))
+{
+	while (root && !(*keycmp)(root->k, key))
+		root = (*keycmp)(root->k, key) < 0 ? root->l : root->r;
+	return root ? root->v : NULL;
+}
