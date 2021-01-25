@@ -42,3 +42,28 @@ struct node *NewNode(void)
 	p->k = p->v = NULL;
 	return p;
 }
+
+struct node *Insert(struct node *root, const void *key, const void *value,
+				int (*keycmp)(const void *, const void *),
+				void *(*keycpy)(void *, const void *),
+				void *(*valcpy)(void *, const void *))
+{
+	struct node *parent = NULL, *p = root;
+
+	if (root == NULL) {
+		if ((root = p = NewNode()) == NULL) return NULL;
+	} else {
+		while (p && !(*keycmp)(p->k, key)) {
+			parent = p;
+			p = (*keycmp)(p->k, key) < 0 ? p->l : p->r;
+		}
+		if (p == NULL) {
+			if ((p = NewNode()) == NULL) return NULL;
+			if ((*keycmp)(parent->k, key) < 0) parent->l = p;
+			else parent->r = p;
+		}
+	}
+	assert(p->k = (*keycpy)(p->k, key));
+	assert(p->v = (*valcpy)(p->v, key));
+	return root;
+}

@@ -31,3 +31,30 @@ struct node *NewNode(void);
 新しいノードを作成する．
 新しいノードの要素は NULL に初期化されている．
 返り値はノードへのポインタ (失敗時は NULL)．
+
+## Insert
+
+```c
+struct node *Insert(struct node *root, const void *key, const void *value,
+				int (*keycmp)(const void *, const void *),
+				void *(*keycpy)(void *, const void *),
+				void *(*valcpy)(void *, const void *));
+```
+
+根ノード `root` にノードを挿入 (すでに存在している場合は置換) する．
+`root` は NULL 可能である．
+`keycpy` や `valcpy` は(キー|値)のコピーを行う関数
+例えば:
+
+```c
+void *my_keycpy(void *prev, const void *newkey)
+{
+	char *p;
+
+	free(prev);
+	if ((p = malloc(strlen(newkey) + 1)) == NULL)
+		return NULL;
+	strcpy(p, newkey);
+	return p;
+}
+```
