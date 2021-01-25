@@ -67,3 +67,15 @@ struct node *Insert(struct node *root, const void *key, const void *value,
 	assert(p->v = (*valcpy)(p->v, key));
 	return root;
 }
+
+struct node *MaxOf(struct node *root)
+{
+	while (root->r) root = root->r;
+	return root;
+}
+
+struct node *MinOf(struct node *root)
+{
+	while (root->l) root = root->l;
+	return root;
+}

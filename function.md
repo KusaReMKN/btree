@@ -58,3 +58,12 @@ void *my_keycpy(void *prev, const void *newkey)
 	return p;
 }
 ```
+
+## MaxOf, MinOf
+
+```c
+struct node *MaxOf(struct node *root);
+struct node *MinOf(struct node *root);
+```
+
+ノード `root` を根とする木のうちで最(大|小)のノードへのポインタを返す．
