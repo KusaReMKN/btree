@@ -32,3 +32,13 @@ void *Search(const struct node *root, const void *key,
 		root = (*keycmp)(root->k, key) < 0 ? root->l : root->r;
 	return root ? root->v : NULL;
 }
+
+struct node *NewNode(void)
+{
+	struct node *p;
+
+	if ((p = malloc(sizeof(*p))) == NULL) return NULL;
+	p->l = p->r = NULL;
+	p->k = p->v = NULL;
+	return p;
+}

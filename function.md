@@ -21,3 +21,13 @@ void *Search(const struct node *root, const void *key,
 渡されたノード `root` を根とする木のうち，検索キー `key` に対応する値を探す．
 関数 `keycmp` は `qsort(3)` や `bsearch(3)` の比較関数と同様の要件．
 返り値は値へのポインタ (見つからなければ NULL)．
+
+## NewNode
+
+```c
+struct node *NewNode(void);
+```
+
+新しいノードを作成する．
+新しいノードの要素は NULL に初期化されている．
+返り値はノードへのポインタ (失敗時は NULL)．
