@@ -43,8 +43,8 @@ struct node *Insert(struct node *root, const void *key, const void *value,
 
 根ノード `root` にノードを挿入 (すでに存在している場合は置換) する．
 `root` は NULL 可能である．
-`keycpy` や `valcpy` は(キー|値)のコピーを行う関数
 返り値は挿入後の木の根ノード．
+`keycpy` や `valcpy` は(キー|値)のコピーを行う関数
 例えば:
 
 ```c
