@@ -76,3 +76,11 @@ int IsLeaf(struct node *p);
 ```
 
 ノード `p` が末端ノード (葉ノード) かどうか調べる
+
+## AChildOf
+
+```c
+struct node *AChildOf(struct node *p);
+```
+
+ノード `p` がただ一つの子ノードを持つときにそのノードへのポインタを返す．
