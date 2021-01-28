@@ -68,3 +68,11 @@ struct node *MinOf(struct node *root);
 ```
 
 ノード `root` を根とする木のうちで最(大|小)のノードへのポインタを返す．
+
+## IsLeaf
+
+```c
+int IsLeaf(struct node *p);
+```
+
+ノード `p` が末端ノード (葉ノード) かどうか調べる

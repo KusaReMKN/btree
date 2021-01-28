@@ -79,3 +79,8 @@ struct node *MinOf(struct node *root)
 	while (root->l) root = root->l;
 	return root;
 }
+
+int IsLeaf(struct node *p)
+{
+	return !p || !p->l && !p->r;
+}
