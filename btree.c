@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <assert.h>
+
 struct node {
 	struct node *l;	/* Left Tree */
 	struct node *r;	/* Right Tree */
