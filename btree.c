@@ -93,3 +93,27 @@ struct node *AChildOf(struct node *p)
 	if (!p || !(!p->l ^ !p->r)) return NULL;
 	return p->l ? p->l : p->r;
 }
+
+struct node *ParentOfNextTo(struct node *p)
+{
+	struct node *parent = p;
+
+	p = p->r;
+	while (p) {
+		parent = p;
+		p = p->l;
+	}
+	return parent;
+}
+
+struct node *ParentOfPrevTo(struct node *p)
+{
+	struct node *parent = p;
+
+	p = p->l;
+	while (p) {
+		parent = p;
+		p = p->r;
+	}
+	return parent;
+}

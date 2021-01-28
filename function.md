@@ -84,3 +84,13 @@ struct node *AChildOf(struct node *p);
 ```
 
 ノード `p` がただ一つの子ノードを持つときにそのノードへのポインタを返す．
+
+## ParentOfNextTo, ParentOfPrevTo
+
+```c
+struct node *ParentOfNextTo(struct node *p);
+struct node *ParentOfPrevTo(struct node *p);
+```
+
+ノード `p` の(次|前)の要素の親ノードへのポインタを返す．
+それは `p` 自身かもしれない．
