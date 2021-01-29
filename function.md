@@ -94,3 +94,14 @@ struct node *ParentOfPrevTo(struct node *p);
 
 ノード `p` の(次|前)の要素の親ノードへのポインタを返す．
 それは `p` 自身かもしれない．
+
+## PrintTree
+
+```c
+void PrintTree(struct node *p, int depth);
+```
+
+二分木の構造を標準出力に書き出す．
+初回呼び出しの時，第二引数には常に 0 を指定すること．
+書き出されたリストは plantuml.com の mindmap 形式でプロットすることで図が得られる．
+この関数はノードのキー，値の要素が文字列であることを前提としている．

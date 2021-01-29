@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 
@@ -116,4 +117,20 @@ struct node *ParentOfPrevTo(struct node *p)
 		p = p->r;
 	}
 	return parent;
+}
+
+void PrintTree(struct node *p, int depth)
+{
+	int i;
+
+	depth++;
+	for (i = 0; i < depth; i++) putchar('*');
+	if (!p) {
+		printf(" NIL\n");
+		return;
+	}
+	printf(" %s : %s\n", p->k, p->v);
+	PrintTree(p->r, depth);
+	PrintTree(p->l, depth);
+	return;
 }
