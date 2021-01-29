@@ -105,3 +105,14 @@ void PrintTree(struct node *p, int depth);
 初回呼び出しの時，第二引数には常に 0 を指定すること．
 書き出されたリストは plantuml.com の mindmap 形式でプロットすることで図が得られる．
 この関数はノードのキー，値の要素が文字列であることを前提としている．
+
+## ParentOf
+
+```c
+struct node *ParentOf(struct node *root, const void *key,
+				int (*keycmp)(const void *, const void *))
+```
+
+渡されたノード `root` を根とする木のうち，検索キー `key` に対応するノードの親を探す．
+`key` に対応するノードが `root` であってはならない．
+返り値はへ親ノードへのポインタ (見つからなければ NULL)．

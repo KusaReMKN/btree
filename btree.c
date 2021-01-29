@@ -134,3 +134,15 @@ void PrintTree(struct node *p, int depth)
 	PrintTree(p->l, depth);
 	return;
 }
+
+struct node *ParentOf(struct node *root, const void *key,
+				int (*keycmp)(const void *, const void *))
+{
+	struct node *parent = root;
+
+	while (root && !(*keycmp)(root->k, key)) {
+		parent = root;
+		root = (*keycmp)(root->k, key) < 0 ? root->l : root->r;
+	}
+	return root ? parent : NULL;
+}
