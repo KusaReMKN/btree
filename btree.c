@@ -146,3 +146,40 @@ struct node *ParentOf(struct node *root, const void *key,
 	}
 	return root ? parent : NULL;
 }
+
+struct node *Remove(struct node *root, const void *key,
+				int (*keycmp)(const void *, const void *),
+				void (*delkey)(void *), void (*delval)(void *))
+{
+	struct node *ret = root, *dest, *next, *tmp;
+	struct node **pnext, **pdest;
+	int cmp;
+
+	if (!(cmp = (*keycmp)(root->k, key))) {
+		pdest = &ret;
+	} else {
+		if (!(tmp = ParentOf(root, key, keycmp))) return ret;
+		pdest = (cmp < 0) ? &tmp->l : &tmp->r;
+	}
+	dest = *pdest;
+
+	if (IsLeaf(dest)) {
+		*pdest = NULL;
+	} else if (tmp = AChildOf(dest)) {
+		*pdest = tmp;
+	} else {
+		tmp = ParentOfNextTo(dest);
+		pnext = (tmp == dest) ? &dest->r : &dest->l;
+		next = *pnext;
+		tmp->l = next->r;
+		*pdest = next;
+		next->r = dest->r;
+		next->l = dest->l;
+	}
+
+	(*delkey)(dest->k);
+	(*delval)(dest->v);
+	free(dest);
+
+	return ret;
+}

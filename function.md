@@ -116,3 +116,24 @@ struct node *ParentOf(struct node *root, const void *key,
 渡されたノード `root` を根とする木のうち，検索キー `key` に対応するノードの親を探す．
 `key` に対応するノードが `root` であってはならない．
 返り値はへ親ノードへのポインタ (見つからなければ NULL)．
+
+## Remove
+
+```c
+struct node *Remove(struct node *root, const void *key,
+				int (*keycmp)(const void *, const void *),
+				void (*delkey)(void *), void (*delval)(void *));
+```
+
+渡されたノード `root` を根とする木から，検索キー `key` に対応するノードを取り除く．
+返り値は削除後の木の根ノードを指すポインタ．
+`key` に対応するノードがない場合は何も行われない．
+`delkey` や `delval` は(キー|値)の領域を解放する関数．
+例えば:
+
+```c
+void my_delkey(void *p)
+{
+	free(p);
+}
+```
