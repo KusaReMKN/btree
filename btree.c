@@ -184,10 +184,9 @@ struct node *Remove(struct node *root, const void *key,
 	} else if (tmp = AChildOf(dest)) {
 		*pdest = tmp;
 	} else {
-		tmp = ParentOfNextTo(dest);
-		pnext = (tmp == dest) ? &dest->r : &dest->l;
+		pnext = RefToNextTo(dest);
 		next = *pnext;
-		tmp->l = next->r;
+		*pnext = AChildOf(next);
 		*pdest = next;
 		next->r = (dest->r == next) ? NULL : dest->r;
 		next->l = (dest->l == next) ? NULL : dest->l;
