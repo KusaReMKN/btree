@@ -117,6 +117,15 @@ struct node *ParentOf(struct node *root, const void *key,
 `key` に対応するノードが `root` であってはならない．
 返り値はへ親ノードへのポインタ (見つからなければ NULL)．
 
+## RefToNextTo, RefToPrevTo
+
+```c
+struct node **RefToNextTo(struct node *p);
+struct node **RefToPrevTo(struct node *p);
+```
+
+ノード `p` の(前|次)のノードを指す参照へのポインタを返す．
+
 ## Remove
 
 ```c

@@ -147,6 +147,22 @@ struct node *ParentOf(struct node *root, const void *key,
 	return root ? parent : NULL;
 }
 
+struct node **RefToNextTo(struct node *p)
+{
+	if (!p->r->l) return &p->r;
+	p = p->r;
+	while (p->l->l) p = p->l;
+	return &p->l;
+}
+
+struct node **RefToPrevTo(struct node *p)
+{
+	if (!p->l->r) return &p->l;
+	p = p->l;
+	while (p->r->r) p = p->r;
+	return &p->r;
+}
+
 struct node *Remove(struct node *root, const void *key,
 				int (*keycmp)(const void *, const void *),
 				void (*delkey)(void *), void (*delval)(void *))
