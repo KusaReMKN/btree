@@ -137,3 +137,11 @@ void my_delkey(void *p)
 	free(p);
 }
 ```
+
+## PrintNode
+
+```c
+void PrintNode(struct node *p);
+```
+
+渡されたノード `p` の情報を標準出力に書き出す．

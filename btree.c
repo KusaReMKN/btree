@@ -183,3 +183,12 @@ struct node *Remove(struct node *root, const void *key,
 
 	return ret;
 }
+
+void PrintNode(struct node *p)
+{
+	printf("Node (%p):\n", p);
+	printf("    Key   : %p (%s)\n", p->k, p->k);
+	printf("    Value : %p (%s)\n", p->v, p->v);
+	printf("    Left  : %p\n", p->l);
+	printf("    Right : %p\n", p->r);
+}
