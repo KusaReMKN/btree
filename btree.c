@@ -32,7 +32,7 @@ struct node *RotateL(struct node *v)
 void *Search(const struct node *root, const void *key,
 				int (*keycmp)(const void *, const void *))
 {
-	while (root && !(*keycmp)(root->k, key))
+	while (root && (*keycmp)(root->k, key))
 		root = (*keycmp)(root->k, key) < 0 ? root->l : root->r;
 	return root ? root->v : NULL;
 }
@@ -57,7 +57,7 @@ struct node *Insert(struct node *root, const void *key, const void *value,
 	if (root == NULL) {
 		if ((root = p = NewNode()) == NULL) return NULL;
 	} else {
-		while (p && !(*keycmp)(p->k, key)) {
+		while (p && (*keycmp)(p->k, key)) {
 			parent = p;
 			p = (*keycmp)(p->k, key) < 0 ? p->l : p->r;
 		}
@@ -140,7 +140,7 @@ struct node *ParentOf(struct node *root, const void *key,
 {
 	struct node *parent = root;
 
-	while (root && !(*keycmp)(root->k, key)) {
+	while (root && (*keycmp)(root->k, key)) {
 		parent = root;
 		root = (*keycmp)(root->k, key) < 0 ? root->l : root->r;
 	}
