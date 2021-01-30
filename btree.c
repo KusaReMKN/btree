@@ -159,7 +159,7 @@ struct node *Remove(struct node *root, const void *key,
 		pdest = &ret;
 	} else {
 		if (!(tmp = ParentOf(root, key, keycmp))) return ret;
-		pdest = (cmp < 0) ? &tmp->l : &tmp->r;
+		pdest = (*keycmp)(tmp->k, key) < 0 ? &tmp->l : &tmp->r;
 	}
 	dest = *pdest;
 
@@ -175,6 +175,8 @@ struct node *Remove(struct node *root, const void *key,
 		*pdest = next;
 		next->r = dest->r;
 		next->l = dest->l;
+		if (next->r == next) next->r = NULL;
+		if (next->l == next) next->l = NULL;
 	}
 
 	(*delkey)(dest->k);
