@@ -126,7 +126,7 @@ void PrintTree(struct node *p, int depth)
 	depth++;
 	for (i = 0; i < depth; i++) putchar('*');
 	if (!p) {
-		printf(" NIL\n");
+		printf("_ NIL\n");
 		return;
 	}
 	printf(" %s : %s\n", p->k, p->v);
