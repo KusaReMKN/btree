@@ -173,10 +173,8 @@ struct node *Remove(struct node *root, const void *key,
 		next = *pnext;
 		tmp->l = next->r;
 		*pdest = next;
-		next->r = dest->r;
-		next->l = dest->l;
-		if (next->r == next) next->r = NULL;
-		if (next->l == next) next->l = NULL;
+		next->r = (dest->r == next) ? NULL : dest->r;
+		next->l = (dest->l == next) ? NULL : dest->l;
 	}
 
 	(*delkey)(dest->k);
