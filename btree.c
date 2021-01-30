@@ -68,7 +68,7 @@ struct node *Insert(struct node *root, const void *key, const void *value,
 		}
 	}
 	assert(p->k = (*keycpy)(p->k, key));
-	assert(p->v = (*valcpy)(p->v, key));
+	assert(p->v = (*valcpy)(p->v, value));
 	return root;
 }
 
