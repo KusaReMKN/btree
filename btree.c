@@ -42,9 +42,9 @@ struct node *NodeOf(const struct node *root, const void *key,
 void *Search(const struct node *root, const void *key,
 				int (*keycmp)(const void *, const void *))
 {
-	while (root && (*keycmp)(root->k, key))
-		root = (*keycmp)(root->k, key) < 0 ? root->l : root->r;
-	return root ? root->v : NULL;
+	struct node *p;
+
+	return p = NodeOf(root, key, keycmp) ? p->v : NULL;
 }
 
 struct node *NewNode(void)
