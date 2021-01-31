@@ -29,6 +29,20 @@ struct node *RotateL(struct node *v)
 	return u;
 }
 
+struct node *RotateLR(struct node *p)
+{
+	if (!p || !p->l) return NULL;
+	p->l = RotateL(p->l);
+	return RotateR(p);
+}
+
+struct node *RotateRL(struct node *p)
+{
+	if (!p || !p->r) return NULL;
+	p->r = RotateR(p->r);
+	return RotateL(p);
+}
+
 struct node *NodeOf(const struct node *root, const void *key,
 				int (*keycmp)(const void *, const void *))
 {
