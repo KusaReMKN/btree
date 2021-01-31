@@ -29,6 +29,16 @@ struct node *RotateL(struct node *v)
 	return u;
 }
 
+struct node *NodeOf(const struct node *root, const void *key,
+				int (*keycmp)(const void *, const void *))
+{
+	int cmp;
+
+	while (root && (cmp = (*keycmp)(root->k, key)))
+		root = cmp < 0 ? root->l : root->r;
+	return root ? root : NULL;
+}
+
 void *Search(const struct node *root, const void *key,
 				int (*keycmp)(const void *, const void *))
 {
