@@ -120,3 +120,8 @@ struct node *NewNode(void)
 	p->h = 1;
 	return p;
 }
+
+int BiasOf(const struct node *p)
+{
+	return p ? (int)HeightOf(p->l) - (int)HeightOf(p->r) : 0;
+}
