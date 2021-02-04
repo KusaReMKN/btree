@@ -19,3 +19,8 @@ struct node *HigherOf(const struct node *a, const struct node *b)
 
 	return (struct node *)(ah > bh ? a : b);
 }
+
+size_t CalcHeight(const struct node *p)
+{
+	return p ? HeightOf(HigherOf(p->l, p->r)) + 1 : 0;
+}
