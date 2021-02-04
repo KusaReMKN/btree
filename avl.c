@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include <stdlib.h>
 
 struct node {
 	struct node *l;
@@ -61,4 +62,24 @@ struct node *RotateRL(struct node *p)
 	if (!p || !p->r) return p;
 	p->r = RotateR(p->r);
 	return RotateL(p);
+}
+
+struct node **RelatedNodesOf(const struct node *root, const void *key,
+				int (*keycmp)(const void *, const void *))
+{
+	struct node **v = NULL, **tmp;
+	size_t items = 1;
+	int cmp;
+
+	while (root && (cmp = (*keycmp)(root->k, key))) {
+		if (!(tmp = realloc(v, ++items * sizeof(*v)))) {
+			free(v);
+			return NULL;
+		}
+		v = tmp;
+		v[items - 2] = (struct node *)root;
+		root = cmp < 0 ? root->l : root->r;
+	}
+	v[items - 1] = NULL;
+	return v;
 }
