@@ -84,7 +84,7 @@ struct node **RelatedNodesOf(const struct node *root, const void *key,
 	return v;
 }
 
-size_t LengthOf(const struct node **v)
+size_t LengthOf(const struct node ***v)
 {
 	size_t i;
 
