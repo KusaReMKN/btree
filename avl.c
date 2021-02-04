@@ -101,3 +101,11 @@ struct node *NodeOf(const struct node *root, const void *key,
 		root = cmp < 0 ? root->l : root->r;
 	return (struct node *)(root ? root : NULL);
 }
+
+void *Search(const struct node *root, const void *key,
+				int (*keycmp)(const void *, const void *))
+{
+	struct node *tmp = NodeOf(root, key, keycmp);
+
+	return tmp ? tmp->r : NULL;
+}
