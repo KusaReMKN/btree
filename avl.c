@@ -48,3 +48,17 @@ struct node *RotateL(struct node *p)
 	tmp->h = CalcHeight(tmp);
 	return tmp;
 }
+
+struct node *RotateLR(struct node *p)
+{
+	if (!p || !p->l) return p;
+	p->l = RotateL(p->l);
+	return RotateR(p);
+}
+
+struct node *RotateRL(struct node *p)
+{
+	if (!p || !p->r) return p;
+	p->r = RotateR(p->r);
+	return RotateL(p);
+}
