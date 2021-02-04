@@ -91,3 +91,13 @@ size_t LengthOf(const struct node **v)
 	for (i = 0; v[i] && v[i + 1]; i++);
 	return i;
 }
+
+struct node *NodeOf(const struct node *root, const void *key,
+				int (*keycmp)(const void *, const void *))
+{
+	int cmp;
+
+	while (root && (cmp = (*keycmp)(root->k, key)))
+		root = cmp < 0 ? root->l : root->r;
+	return (struct node *)(root ? root : NULL);
+}
