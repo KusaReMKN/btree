@@ -161,3 +161,40 @@ struct node ***RefToRelativeNodesOf(const struct node *root, const void *key,
 	v[len - 1] = NULL;
 	return v;
 }
+
+struct node *Insert(struct node *root, const void *key, const void *val,
+				int (*keycmp)(const void *, const void *),
+				void *(*keycpy)(void *, const void *),
+				void *(*valcpy)(void *, const void *))
+{
+	struct node ***v = RefToRelativeNodesOf(root, key, keycmp);
+	struct node **pdest;
+	struct node *dest;
+	size_t l;
+	int cmp;
+
+	if (!v) return NULL;
+	if (!root) {
+		if (!(root = dest = NewNode())) {
+			free(v);
+			return NULL;
+		}
+	} else {
+		pdest = (l = LengthOf(v)) == 0 ? &root : v[l - 1];
+		if (!(dest = *pdest)) {
+			if (!(dest = NewNode())) {
+				free(v);
+				return NULL;
+			}
+			*pdest = dest;
+		}
+	}
+	dest->k = (*keycpy)(dest->k, key);
+	dest->v = (*valcpy)(dest->v, val);
+	for (l--; l >= 0; l--) {
+		(*v[l])->h = CalcHeight(*v[l]);
+		*v[l] = Balance(*v[l]);
+	}
+	free(v);
+	return Balance(root);
+}
