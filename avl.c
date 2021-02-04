@@ -135,3 +135,29 @@ struct node *Balance(struct node *p)
 	else p = BiasOf(p->l) > 0 ? RotateR(p) : RotateLR(p);
 	return p;
 }
+
+struct node ***RefToRelativeNodesOf(const struct node *root, const void *key,
+				int (*keycmp)(const void *, const void *))
+{
+	struct node ***v = NULL, ***tmp;
+	size_t len = 1;
+	int cmp;
+
+	if (!(v = malloc(sizeof(*v)))) return NULL;
+	while (root && (cmp = (*keycmp)(root->k, key))) {
+		if (!(tmp = realloc(v, ++len * sizeof(*v)))) {
+			free(v);
+			return NULL;
+		}
+		v = tmp;
+		if (cmp < 0) {
+			v[len - 2] = (struct node **)&root->l;
+			root = root->l;
+		} else {
+			v[len - 2] = (struct node **)&root->r;
+			root = root->r;
+		}
+	}
+	v[len - 1] = NULL;
+	return v;
+}
