@@ -125,3 +125,13 @@ int BiasOf(const struct node *p)
 {
 	return p ? (int)HeightOf(p->l) - (int)HeightOf(p->r) : 0;
 }
+
+struct node *Balance(struct node *p)
+{
+	int b;
+
+	if (abs(b = BiasOf(p)) < 2) return p;
+	if (b < 0) p = BiasOf(p->r) < 0 ? RotateL(p) : RotateRL(p);
+	else p = BiasOf(p->l) > 0 ? RotateR(p) : RotateLR(p);
+	return p;
+}
