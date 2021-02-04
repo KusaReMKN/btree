@@ -109,3 +109,14 @@ void *Search(const struct node *root, const void *key,
 
 	return tmp ? tmp->r : NULL;
 }
+
+struct node *NewNode(void)
+{
+	struct node *p;
+
+	if (!(p = malloc(sizeof(*p)))) return NULL;
+	p->l = p->r = NULL;
+	p->k = p->v = NULL;
+	p->h = 1;
+	return p;
+}
