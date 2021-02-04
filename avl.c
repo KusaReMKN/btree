@@ -107,7 +107,7 @@ void *Search(const struct node *root, const void *key,
 {
 	struct node *tmp = NodeOf(root, key, keycmp);
 
-	return tmp ? tmp->r : NULL;
+	return tmp ? tmp->v : NULL;
 }
 
 struct node *NewNode(void)
