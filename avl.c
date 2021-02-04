@@ -7,3 +7,8 @@ struct node {
 	void *v;
 	size_t h;
 };
+
+size_t HeightOf(const struct node *p)
+{
+	return p ? p->h : 0;
+}
