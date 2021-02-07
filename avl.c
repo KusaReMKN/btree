@@ -64,7 +64,7 @@ struct node *RotateRL(struct node *p)
 	return RotateL(p);
 }
 
-struct node **RelatedNodesOf(const struct node *root, const void *key,
+struct node **RelNodesOf(const struct node *root, const void *key,
 				int (*keycmp)(const void *, const void *))
 {
 	struct node **v = NULL, **tmp;
@@ -136,7 +136,7 @@ struct node *Balance(struct node *p)
 	return p;
 }
 
-struct node ***RefToRelativeNodesOf(const struct node *root, const void *key,
+struct node ***RefToRelNodesOf(const struct node *root, const void *key,
 				int (*keycmp)(const void *, const void *))
 {
 	struct node ***v = NULL, ***tmp;
@@ -167,7 +167,7 @@ struct node *Insert(struct node *root, const void *key, const void *val,
 				void *(*keycpy)(void *, const void *),
 				void *(*valcpy)(void *, const void *))
 {
-	struct node ***v = RefToRelativeNodesOf(root, key, keycmp);
+	struct node ***v = RefToRelNodesOf(root, key, keycmp);
 	struct node **pdest;
 	struct node *dest;
 	size_t l = 0;
