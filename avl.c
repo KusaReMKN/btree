@@ -243,30 +243,39 @@ struct node *Remove(struct node *root, const void *key,
 				void (*keyfree)(void *),
 				void (*valfree)(void *))
 {
-	struct node ***v = RefToRelNodesOf(root, key, keycmp);
-	struct node **pdest;
-	struct node *dest, *tmp;
-	size_t l, odest;
+	struct node ***v = RefToRelNodesOf(root, key, keycmp), ***vtmp;
+	struct node **pdest, **pnext;
+	struct node *dest, *tmp, *next;
+	size_t l;
 
-	if (!v || !root) return NULL;
-	l = LengthOf(v);
-	if (!(pdest = v[l - 1])) pdest = &root;
-	dest = *pdest;
+	if (!v) return NULL;
+	if ((l = LengthOf(v)) == 0) {
+		if (!(vtmp = realloc(v, ++l * sizeof(*v)))) {
+			free(v);
+			return NULL;
+		}
+		v = vtmp;
+		v[0] = &root;
+		v[1] = NULL;
+	}
+	pdest = v[l-1];
+	if (!(dest = *pdest)) return root;
 
 	if (IsLeaf(dest)) {
-		l--;
 		*pdest = NULL;
+		v[--l] = NULL;
 	} else if ((tmp = AChildOf(dest))) {
-		l--;
 		*pdest = tmp;
+		v[--l] = NULL;
 	} else {
-		odest = l - 1;
-		v = RefToRelNodesOfNextToLastOf(v);
+		if (!(v = RefToRelNodesOfNextToLastOf(v))) return NULL;
 		l = LengthOf(v);
-		*v[odest] = *v[l -1];
-		*v[l-1] = AChildOf(*v[l-1]);
-		(*v[odest])->l = dest->l;
-		(*v[odest])->r = dest->r;
+		pnext = v[--l];
+		next = *pnext;
+		*pnext = AChildOf(next);
+		*pdest = next;
+		next->r = dest->r;
+		next->l = dest->l;
 	}
 
 	(*keyfree)(dest->k);
