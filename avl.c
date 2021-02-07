@@ -202,3 +202,9 @@ int IsLeaf(struct node *p)
 {
 	return !p || !p->l && !p->r;
 }
+
+struct node *AChildOf(const struct node *p)
+{
+	if (!p || !(!p->l & !p->r)) return NULL;
+	return p->l ? p->l : p->r;
+}
