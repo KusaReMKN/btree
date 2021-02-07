@@ -208,3 +208,26 @@ struct node *AChildOf(const struct node *p)
 	if (!p || !(!p->l & !p->r)) return NULL;
 	return p->l ? p->l : p->r;
 }
+
+struct node ***RefToRelNodesOfNextToLastOf(struct node ***v)
+{
+	size_t l;
+	struct node ***tmp;
+	struct node *p;
+
+	if (!v || !*v) return v;
+	l = LengthOf(v) + 1;
+	p = *v[l - 2];
+	if (!(tmp = realloc(v, l * sizeof(*v)))) return NULL;
+	v = tmp;
+	v[l-1] = &p->l;
+	p = p->l;
+	while (p->r) {
+		if (!(tmp = realloc(v, ++l * sizeof(*v)))) return NULL;
+		v = tmp;
+		v[l-1] = &p->r;
+		p = p->r;
+	}
+	v[l] = NULL;
+	return v;
+}
