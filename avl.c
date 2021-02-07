@@ -231,3 +231,46 @@ struct node ***RefToRelNodesOfNextToLastOf(struct node ***v)
 	v[l] = NULL;
 	return v;
 }
+
+struct node *Remove(struct node *root, const void *key,
+				int (*keycmp)(const void *, const void *),
+				void (*keyfree)(void *),
+				void (*valfree)(void *))
+{
+	struct node ***v = RefToRelNodesOf(root, key, keycmp);
+	struct node **pdest;
+	struct node *dest, *tmp;
+	size_t l, odest;
+
+	if (!v || !root) return NULL;
+	l = LengthOf(v);
+	if (!(pdest = v[l - 1])) pdest = &root;
+	dest = *pdest;
+
+	if (IsLeaf(dest)) {
+		l--;
+		*pdest = NULL;
+	} else if ((tmp = AChildOf(dest))) {
+		l--;
+		*pdest = tmp;
+	} else {
+		odest = l - 1;
+		v = RefToRelNodesOfNextToLastOf(v);
+		l = LengthOf(v);
+		*v[odest] = *v[l -1];
+		*v[l-1] = AChildOf(*v[l-1]);
+		(*v[odest])->l = dest->l;
+		(*v[odest])->r = dest->r;
+	}
+
+	(*keyfree)(dest->k);
+	(*valfree)(dest->v);
+	free(dest);
+
+	for (; l > 0; l--) {
+		(*v[l-1])->h = CalcHeight(*v[l-1]);
+		*v[l-1] = Balance(*v[l-1]);
+	}
+	free(v);
+	return Balance(root);
+}
