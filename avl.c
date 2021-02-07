@@ -197,3 +197,8 @@ struct node *Insert(struct node *root, const void *key, const void *val,
 	free(v);
 	return Balance(root);
 }
+
+int IsLeaf(struct node *p)
+{
+	return !p || !p->l && !p->r;
+}
