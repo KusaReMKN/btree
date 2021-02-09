@@ -247,6 +247,7 @@ struct node *Remove(struct node *root, const void *key,
 	struct node ***v = RefToRelNodesOf(root, key, keycmp), ***vtmp;
 	struct node **pdest, **pnext;
 	struct node *dest, *tmp, *next;
+	void *foo;
 	size_t l;
 
 	if (!v) return NULL;
@@ -277,6 +278,10 @@ struct node *Remove(struct node *root, const void *key,
 		*pdest = next;
 		next->r = dest->r;
 		next->l = dest->l;
+		foo = (*v[l-1])->k;
+		free(v);
+		v = RefToRelNodesOf(root, foo, keycmp);
+		l = LengthOf(v) - 1;
 	}
 
 	(*keyfree)(dest->k);
