@@ -272,6 +272,7 @@ static void RemoveNode(struct node *p, void (*keyfree)(void *),
 	if (p == NULL) return;
 	(*keyfree)(p->k);
 	(*valfree)(p->v);
+	free(p);
 	return;
 }
 
