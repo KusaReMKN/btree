@@ -413,7 +413,7 @@ int RemoveItem(mknmap map, const void *key)
 	struct node *tmp = Remove(map->tree, key, map->keycmp, map->keyfree,
 								map->valfree);
 
-	if (tmp == NULL) return !0;
+	//if (tmp == NULL) return !0;
 	map->tree = tmp;
 	return 0;
 }
