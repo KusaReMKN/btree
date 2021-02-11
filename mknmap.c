@@ -167,7 +167,7 @@ static struct node *Insert(struct node *root, const void *key, const void *val,
 				void *(*valcpy)(void *, const void *))
 {
 	struct node ***v = RefToRelNodesOf(root, key, keycmp);
-	struct node **pdest, *dest;
+	struct node **pdest, *dest, *tmp;
 	size_t l = 0;
 
 	if (v == NULL) return NULL;
@@ -189,9 +189,12 @@ static struct node *Insert(struct node *root, const void *key, const void *val,
 	}
 	dest->k = (*keycpy)(dest->k, key);
 	dest->v = (*valcpy)(dest->v, val);
-	for (; l > 0; l--) {
+	for (l > 0 && l--; l > 0 && BiasOf(*v[l - 1]) != 0; l--) {
 		(*v[l - 1])->h = CalcHeight(*v[l - 1]);
-		*v[l - 1] = Balance(*v[l - 1]);
+		if ((tmp = Balance(*v[l - 1])) != *v[l - 1]) {
+			*v[l - 1] = tmp;
+			break;
+		}
 	}
 	free(v);
 	return Balance(root);
