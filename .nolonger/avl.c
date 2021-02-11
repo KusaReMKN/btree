@@ -205,7 +205,7 @@ int IsLeaf(struct node *p)
 
 struct node *AChildOf(const struct node *p)
 {
-	if (!p || !(!p->l & !p->r)) return NULL;
+	if (!p || !(!p->l ^ !p->r)) return NULL;
 	return p->l ? p->l : p->r;
 }
 
@@ -217,24 +217,25 @@ struct node ***RefToRelNodesOfNextToLastOf(struct node ***v)
 
 	if (!v || (l = LengthOf(v)) == 0) return v;
 	p = *v[l - 1];
-	if (!(tmp = realloc(v, ++l * sizeof(*v)))) {
+	l += 2;
+	if (!(tmp = realloc(v, l * sizeof(*v)))) {
 		free(v);
 		return NULL;
 	}
 	v = tmp;
-	v[l - 1] = &p->r;
+	v[l - 2] = &p->r;
 	p = p->r;
 
-	while (p->l) {
+	while (p && p->l) {
 		if (!(tmp = realloc(v, ++l * sizeof(*v)))) {
 			free(v);
 			return NULL;
 		}
 		v = tmp;
-		v[l - 1] = &p->l;
+		v[l - 2] = &p->l;
 		p = p->l;
 	}
-	v[l] = NULL;
+	v[l-1] = NULL;
 	return v;
 }
 
@@ -246,7 +247,7 @@ struct node *Remove(struct node *root, const void *key,
 	struct node ***v = RefToRelNodesOf(root, key, keycmp), ***vtmp;
 	struct node **pdest, **pnext;
 	struct node *dest, *tmp, *next;
-	size_t l;
+	size_t l, ldest;
 
 	if (!v) return NULL;
 	if ((l = LengthOf(v)) == 0) {
@@ -268,6 +269,7 @@ struct node *Remove(struct node *root, const void *key,
 		*pdest = tmp;
 		v[--l] = NULL;
 	} else {
+		ldest = l;
 		if (!(v = RefToRelNodesOfNextToLastOf(v))) return NULL;
 		l = LengthOf(v);
 		pnext = v[--l];
@@ -276,6 +278,7 @@ struct node *Remove(struct node *root, const void *key,
 		*pdest = next;
 		next->r = dest->r;
 		next->l = dest->l;
+		v[ldest] = &next->r;
 	}
 
 	(*keyfree)(dest->k);
