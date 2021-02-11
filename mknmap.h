@@ -32,5 +32,7 @@ extern mapitem FirstItem(const mknmap map);
 extern mapitem LastItem(const mknmap map);
 extern int RemoveItem(mknmap map, const void *key);
 extern int IsEmpty(const mknmap map);
+extern void RemoveAll(mknmap map);
+extern void DeleteMap(mknmap map);
 
 #endif /* MKNMAP_H */

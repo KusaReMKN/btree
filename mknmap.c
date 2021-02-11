@@ -329,6 +329,19 @@ static struct node *Remove(struct node *root, const void *key,
 	return Balance(root);
 }
 
+/*
+ * RemoveTree -- Remove all node from Tree
+ */
+static struct node *RemoveTree(struct node *root, void (*keyfree)(void *),
+				void (*valfree)(void *))
+{
+	if (root == NULL) return NULL;
+	RemoveTree(root->l, keyfree, valfree);
+	RemoveTree(root->r, keyfree, valfree);
+	RemoveNode(root, keyfree, valfree);
+	return NULL;
+}
+
 /*****************************************************************************/
 
 /*
@@ -410,4 +423,23 @@ int RemoveItem(mknmap map, const void *key)
 int IsEmpty(const mknmap map)
 {
 	return map->tree == NULL;
+}
+
+/*
+ * RemoveAll -- Remove all Items from Map
+ */
+void RemoveAll(mknmap map)
+{
+	RemoveTree(map->tree, map->keyfree, map->valfree);
+	return;
+}
+
+/*
+ * DeleteMap -- Delete the Map
+ */
+void DeleteMap(mknmap map)
+{
+	RemoveTree(map->tree, map->keyfree, map->valfree);
+	free(map);
+	return;
 }
