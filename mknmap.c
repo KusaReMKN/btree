@@ -264,6 +264,18 @@ static struct node ***RefToRelNodesOfNextToLastOf(struct node ***v)
 }
 
 /*
+ * RemoveNode -- Remove the Node
+ */
+static void RemoveNode(struct node *p, void (*keyfree)(void *),
+				void (*valfree)(void *))
+{
+	if (p == NULL) return;
+	(*keyfree)(p->k);
+	(*valfree)(p->v);
+	return;
+}
+
+/*
  * Remove -- Remove Node from Tree
  */
 static struct node *Remove(struct node *root, const void *key,
@@ -307,9 +319,7 @@ static struct node *Remove(struct node *root, const void *key,
 		next->l = dest->l;
 		v[ldest] = &next->r;
 	}
-	(*keyfree)(dest->k);
-	(*valfree)(dest->v);
-	free(dest);
+	RemoveNode(dest, keyfree, valfree);
 
 	for (; l > 0; l--) {
 		(*v[l - 1])->h = CalcHeight(*v[l - 1]);
