@@ -240,7 +240,7 @@ static struct node ***RefToRelNodesOfNextToLastOf(struct node ***v)
 	size_t l;
 
 	if (v == NULL || (l = LengthOf(v)) == 0) return v;
-	p = *v[l  - 1];
+	p = *v[l - 1];
 	l += 2;
 	if ((tmp = realloc(v, l * sizeof(*v))) == NULL) {
 		free(v);
@@ -250,7 +250,7 @@ static struct node ***RefToRelNodesOfNextToLastOf(struct node ***v)
 	v[l - 2] = &p->r;
 	p = p->r;
 
-	while (p != NULL && p->l == NULL) {
+	while (p != NULL && p->l != NULL) {
 		if ((tmp = realloc(v, ++l * sizeof(*v))) == NULL) {
 			free(v);
 			return NULL;
