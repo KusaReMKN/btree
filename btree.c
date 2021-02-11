@@ -212,8 +212,8 @@ struct node *Remove(struct node *root, const void *key,
 		next = *pnext;
 		*pnext = AChildOf(next);
 		*pdest = next;
-		next->r = (dest->r == next) ? NULL : dest->r;
-		next->l = (dest->l == next) ? NULL : dest->l;
+		next->r = dest->r;
+		next->l = dest->l;
 	}
 
 	(*delkey)(dest->k);
