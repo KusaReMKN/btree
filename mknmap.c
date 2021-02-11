@@ -325,7 +325,7 @@ static struct node *Remove(struct node *root, const void *key,
 	}
 	RemoveNode(dest, keyfree, valfree);
 
-	for (; l > 0; l--) {
+	for (l > 0 && l--; l > 0; l--) {
 		(*v[l - 1])->h = CalcHeight(*v[l - 1]);
 		*v[l - 1] = Balance(*v[l - 1]);
 	}
