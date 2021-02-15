@@ -58,7 +58,7 @@ int main(void)
 
 ## 関数一覧
 
-そのうち書きます．
+[functions.md](functions.md) を参照してください．
 
 ## ライセンス
 
